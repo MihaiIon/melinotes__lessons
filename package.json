@@ -1,0 +1,17 @@
+{
+  "name": "melissa__lessons",
+  "version": "1.0.0",
+  "description": "A front-end development project using Vue 3 and Vite.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.2.26"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.8.2",
+    "vite": "^2.7.4"
+  }
+}
