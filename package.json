@@ -11,7 +11,9 @@
     "vue": "^3.2.26"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.8.2",
-    "vite": "^2.7.4"
+    "@vitejs/plugin-legacy": "^4.0.0",
+    "@vitejs/plugin-vue": "^4.1.0",
+    "terser": "^5.16.9",
+    "vite": "^4.2.1"
   }
 }
