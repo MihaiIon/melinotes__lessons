@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "tonal": "^4.14.0",
+    "vexflow": "^4.1.0",
     "vue": "^3.2.26",
     "vuetify": "^3.1.4"
   },
