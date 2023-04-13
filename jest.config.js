@@ -6,4 +6,8 @@ module.exports = {
       "filename": "report.html"
     }]
   ],
+  watchPlugins: [
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname',
+  ],
 }
