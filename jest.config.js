@@ -1,4 +1,5 @@
 module.exports = {
+  moduleFileExtensions: ['js', 'vue'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
@@ -9,11 +10,16 @@ module.exports = {
       "filename": "report.html"
     }]
   ],
+  testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    customExportConditions: ["node", "node-addons"],
+  },
+  transform: {
+    "^.+\\.js$": "babel-jest",
+    '^.+\\.vue$': '@vue/vue3-jest',
+  },
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
   ],
-  transform: {
-    "^.+\\.js$": "babel-jest"
-  }
 };
