@@ -26,10 +26,10 @@ describe("createTrebleClefNaturalNoteQuizz", () => {
 
     it('should contain natural notes from A3 to D6', () => {
       const quizz = createTrebleClefNaturalNoteQuizz();
-      const allChoicesStaffNotationValue = quizz.config.allChoices.map(choice => choice.staffNotationValue);
-      const allChoicesStaffNotationValueSet = new Set(allChoicesStaffNotationValue);
+      const allChoicesScientificPitchNotation = quizz.config.allChoices.map(choice => choice.scientificPitchNotation);
+      const allChoicesScientificPitchNotationSet = new Set(allChoicesScientificPitchNotation);
 
-      expect(allChoicesStaffNotationValueSet).toEqual(new Set(["A3", "B3", "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6"]));
+      expect(allChoicesScientificPitchNotationSet).toEqual(new Set(["A3", "B3", "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6"]));
     });
 
     it('should select an answer from the quizz choices (100 tries)', () => {
