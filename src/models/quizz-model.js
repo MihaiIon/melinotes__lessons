@@ -1,32 +1,48 @@
+import { randomElement } from "@/utilities";
+
 export default class QuizzModel {
-  static DEFAULT_CHOICES_COUNT = 4;
+  constructor(params = {}) {
+    this.config = initializeConfigFromParams(params);
 
-  constructor(config) {
-    this.config = {
-      allChoices: config.allChoices || [],
-      choicesCount: config.choicesCount || QuizzModel.DEFAULT_CHOICES_COUNT,
-    };
+    validateChoices(params.choices);
+    this.choices = params.choices;
+    this.choicesCount = this.choices.length;
 
-    this.choices = selectRandomChoices(this.config.allChoices, this.config.choicesCount);
-    this.answer = selectRandomAnswer(this.choices);
+    this.answer = randomElement(this.choices);
+  }
+
+  static createFromGenerator(generator = null) {
+    validateGenerator(generator);
+
+    const { choices, allChoices } = generator.generate();
+
+    return new QuizzModel({ choices, allChoices, generator });
   }
 }
 
-function selectRandomChoices(choices, choicesCount) {
-  const randomChoices = [];
+function initializeConfigFromParams(params) {
+  let allChoices = params.allChoices || [];
+  allChoices = allChoices.length > 0 ? allChoices : params.choices;
 
-  for (let i = 0; i < choicesCount; i++) {
-    const randomIndex = Math.floor(Math.random() * choices.length);
-    const randomChoice = choices[randomIndex];
-
-    randomChoices.push(randomChoice);
-  }
-
-  return randomChoices;
+  return {
+    allChoices,
+    allChoicesCount: allChoices?.length,
+    generator: params.generator || null,
+  };
 }
 
-function selectRandomAnswer(choices) {
-  const randomIndex = Math.floor(Math.random() * choices.length);
+function validateChoices(choices) {
+  if(!choices) {
+    throw new Error("The `choices` configuration is required to create a quizz");
+  }
 
-  return choices[randomIndex];
+  if(choices.length === 0) {
+    throw new Error("The `choices` configuration cannot be empty");
+  }
+}
+
+function validateGenerator(generator) {
+  if(!generator) {
+    throw new Error("The `generator` parameter is required to create a quizz");
+  }
 }
