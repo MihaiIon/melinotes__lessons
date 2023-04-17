@@ -1,5 +1,5 @@
 module.exports = {
-  moduleFileExtensions: ['js', 'vue'],
+  moduleFileExtensions: ["js", "ts", "json", "vue"],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
@@ -15,7 +15,7 @@ module.exports = {
     customExportConditions: ["node", "node-addons"],
   },
   transform: {
-    "^.+\\.js$": "babel-jest",
+    "^.+\\.ts$": "ts-jest",
     '^.+\\.vue$': '@vue/vue3-jest',
   },
   watchPlugins: [
