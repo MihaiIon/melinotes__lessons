@@ -1,15 +1,15 @@
-import NoteModel from "@/models/note-model";
+import Model from "@/models/note-model";
 
 describe("NoteModel", () => {
   describe("when creating a note without parameters", () => {
     it("should throw an error describing that a value is required", () => {
-      expect(() => new NoteModel()).toThrowError("A `value` is required to create a note");
+      expect(() => new Model()).toThrowError("A `value` is required to create a note");
     });
   });
 
   describe("when creating a note with a value, but without specifying the octave", () => {
     it("should create a note with the octave set to 4", () => {
-      const note = new NoteModel("C");
+      const note = new Model("C");
       expect(note.value).toBe("C");
       expect(note.octave).toBe(4);
       expect(note.scientificPitchNotation).toBe("C4");
@@ -19,7 +19,7 @@ describe("NoteModel", () => {
 
   describe("when creating a note with a value and an octave", () => {
     it("should create a note with the value and the octave", () => {
-      const note = new NoteModel("C", 5);
+      const note = new Model("C", 5);
       expect(note.value).toBe("C");
       expect(note.octave).toBe(5);
       expect(note.scientificPitchNotation).toBe("C5");
@@ -30,7 +30,7 @@ describe("NoteModel", () => {
   describe(".createFromScientificPitchNotation", () => {
     describe("when providing a valid scientific pitch notation", () => {
       it("should create a note with the value and the octave", () => {
-        const note = NoteModel.createFromScientificPitchNotation("C5");
+        const note = Model.createFromScientificPitchNotation("C5");
         expect(note.value).toBe("C");
         expect(note.octave).toBe(5);
         expect(note.scientificPitchNotation).toBe("C5");
@@ -40,7 +40,7 @@ describe("NoteModel", () => {
 
     describe("when providing an invalid scientific pitch notation", () => {
       it("should throw an error", () => {
-        expect(() => NoteModel.createFromScientificPitchNotation("C")).toThrowError("Invalid scientific pitch notation");
+        expect(() => Model.createFromScientificPitchNotation("C")).toThrowError("Invalid scientific pitch notation");
       });
     });
   });
@@ -48,7 +48,7 @@ describe("NoteModel", () => {
   describe(".createFromVexflowNotation", () => {
     describe("when providing a valid vexflow notation", () => {
       it("should create a note with the value and the octave", () => {
-        const note = NoteModel.createFromVexflowNotation("c/5");
+        const note = Model.createFromVexflowNotation("c/5");
         expect(note.value).toBe("C");
         expect(note.octave).toBe(5);
         expect(note.scientificPitchNotation).toBe("C5");
@@ -58,7 +58,7 @@ describe("NoteModel", () => {
 
     describe("when providing an invalid vexflow notation", () => {
       it("should throw an error", () => {
-        expect(() => NoteModel.createFromVexflowNotation("c")).toThrowError("Invalid vexflow notation");
+        expect(() => Model.createFromVexflowNotation("c")).toThrowError("Invalid vexflow notation");
       });
     });
   });
