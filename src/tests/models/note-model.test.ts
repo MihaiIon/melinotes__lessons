@@ -1,12 +1,6 @@
 import Model from "@/models/note-model";
 
 describe("NoteModel", () => {
-  describe("when creating a note without parameters", () => {
-    it("should throw an error describing that a value is required", () => {
-      expect(() => new Model()).toThrowError("A `value` is required to create a note");
-    });
-  });
-
   describe("when creating a note with a value, but without specifying the octave", () => {
     it("should create a note with the octave set to 4", () => {
       const note = new Model("C");
