@@ -1,4 +1,4 @@
-import { naturalNotesBetween } from "@/helpers";
+import { naturalNotesBetween } from "@/music-utilities";
 
 import NoteModel from "@/models/note-model";
 
