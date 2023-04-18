@@ -1,4 +1,7 @@
 export default class NoteModel {
+  static SCIENTIFIC_PITCH_NOTATION_ERROR_MESSAGE: string = Object.freeze("Invalid scientific pitch notation");
+  static VEXFLOW_NOTATION_ERROR_MESSAGE: string = Object.freeze("Invalid vexflow notation");
+
   value: string;
   octave: number;
   scientificPitchNotation: string;
@@ -17,7 +20,7 @@ export default class NoteModel {
     const noteValueWithoutOctave: string = scientificPitchNotation.slice(0, -1);
     const noteOctave: number = parseInt(scientificPitchNotation.slice(-1));
 
-    if(!noteOctave) throw new Error("Invalid scientific pitch notation");
+    if(!noteOctave) throw new Error(NoteModel.SCIENTIFIC_PITCH_NOTATION_ERROR_MESSAGE);
     
     return new NoteModel(noteValueWithoutOctave, noteOctave);
   }
@@ -26,7 +29,7 @@ export default class NoteModel {
     const noteValueWithoutOctave: string = vexflowNotation.slice(0, 1).toUpperCase();
     const noteOctave: number = parseInt(vexflowNotation.slice(-1));
 
-    if(!noteOctave) throw new Error("Invalid vexflow notation");
+    if(!noteOctave) throw new Error(NoteModel.VEXFLOW_NOTATION_ERROR_MESSAGE);
     
     return new NoteModel(noteValueWithoutOctave, noteOctave);
   }

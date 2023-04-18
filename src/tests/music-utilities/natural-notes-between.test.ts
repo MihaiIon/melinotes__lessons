@@ -14,6 +14,13 @@ describe("naturalNotesBetween", () => {
       expect(note.scientificPitchNotation).toBe("C4");
       expect(note.vexflowNotation).toBe("c/4");
     });
+
+    describe('when the starting note is not a valid scientific pitch notation', () => {
+      it('should throw an error describing that the starting note must be a valid scientific pitch notation value', () => {
+        expect(() => naturalNotesBetween("C")).toThrowError(NoteModel.SCIENTIFIC_PITCH_NOTATION_ERROR_MESSAGE);
+      });
+    });
+
   });
 
   describe('when providing the starting note and the ending note', () => {
@@ -39,6 +46,13 @@ describe("naturalNotesBetween", () => {
       expect(note3.scientificPitchNotation).toBe("E4");
       expect(note3.vexflowNotation).toBe("e/4");
     });
+
+    describe('when the ending note is not a valid scientific pitch notation', () => {
+      it('should throw an error describing that the ending note must be a valid scientific pitch notation value', () => {
+        expect(() => naturalNotesBetween("C4", "123")).toThrowError(NoteModel.SCIENTIFIC_PITCH_NOTATION_ERROR_MESSAGE);
+      });
+    });
+
   });
 
   describe('when providing the starting note and the ending note (more than one octave)', () => {
