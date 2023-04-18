@@ -21,6 +21,11 @@ describe("naturalNotesBetween", () => {
       });
     });
 
+    describe('when the starting note is not a natural note', () => {
+      it('should throw an error describing that the starting note must be a natural note', () => {
+        expect(() => naturalNotesBetween("C#4")).toThrowError("'C#' is not a natural note");
+      });
+    });
   });
 
   describe('when providing the starting note and the ending note', () => {
@@ -49,10 +54,15 @@ describe("naturalNotesBetween", () => {
 
     describe('when the ending note is not a valid scientific pitch notation', () => {
       it('should throw an error describing that the ending note must be a valid scientific pitch notation value', () => {
-        expect(() => naturalNotesBetween("C4", "123")).toThrowError(NoteModel.SCIENTIFIC_PITCH_NOTATION_ERROR_MESSAGE);
+        expect(() => naturalNotesBetween("C4", "F")).toThrowError(NoteModel.SCIENTIFIC_PITCH_NOTATION_ERROR_MESSAGE);
       });
     });
 
+    describe('when the ending note is not a natural note', () => {
+      it('should throw an error describing that the ending note must be a natural note', () => {
+        expect(() => naturalNotesBetween("C4", "Eb4")).toThrowError("'Eb' is not a natural note");
+      });
+    });
   });
 
   describe('when providing the starting note and the ending note (more than one octave)', () => {
