@@ -3,13 +3,6 @@ import { naturalNotesBetween } from "@/music-utilities";
 import NoteModel from "@/models/note-model";
 
 describe("naturalNotesBetween", () => {
-  describe("when providing no paramaters", () => {
-    it("should return an empty array", () => {
-      const notes = naturalNotesBetween();
-      expect(notes.length).toBe(0);
-    });
-  });
-
   describe('when providing only the starting note', () => {
     it('should return only that note', () => {
       const notes = naturalNotesBetween("C4");

@@ -2,7 +2,7 @@ import NoteModel from '@/models/note-model';
 
 const ALL_NATURAL_NOTES = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 
-export default function naturalNotesBetween(fromStaffNotationValue, toStaffNotationValue) {
+export default function naturalNotesBetween(fromStaffNotationValue: string, toStaffNotationValue?: string) {
   if (!fromStaffNotationValue) return [];
 
   if (!toStaffNotationValue) return [createNoteFromScientificPitchNotation(fromStaffNotationValue)];
@@ -38,7 +38,7 @@ export default function naturalNotesBetween(fromStaffNotationValue, toStaffNotat
   return notes;
 };
 
-function getNotesBetween(startingNote, endingNote) {
+function getNotesBetween(startingNote: string, endingNote: string) {
   const startingNoteIndex = ALL_NATURAL_NOTES.indexOf(startingNote);
   const endingNoteIndex = ALL_NATURAL_NOTES.indexOf(endingNote);
 
@@ -49,6 +49,6 @@ function getNotesBetween(startingNote, endingNote) {
   return ALL_NATURAL_NOTES.slice(startingNoteIndex, endingNoteIndex + 1);
 }
 
-function createNoteFromScientificPitchNotation(staffNotationValue) {
+function createNoteFromScientificPitchNotation(staffNotationValue: string) {
   return NoteModel.createFromScientificPitchNotation(staffNotationValue);
 }
