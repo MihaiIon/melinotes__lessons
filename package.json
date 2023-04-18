@@ -4,7 +4,7 @@
   "description": "A front-end development project using Vue 3 and Vite.",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "test": "jest",
     "test:watch": "jest --watchAll"
