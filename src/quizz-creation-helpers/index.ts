@@ -5,5 +5,5 @@ import TrebleClefNaturalNoteQuizzGeneratorModel from "@/models/quizz-generators/
 export const createTrebleClefNaturalNoteQuizz = () => {
   const generator = new TrebleClefNaturalNoteQuizzGeneratorModel();
 
-  return QuizzModel.createFromGenerator(generator);
+  return generator.generate();
 };
