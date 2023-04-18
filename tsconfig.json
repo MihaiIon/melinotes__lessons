@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
+    "declaration": false,
     "importHelpers": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
