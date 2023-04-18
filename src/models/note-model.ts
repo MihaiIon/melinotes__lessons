@@ -13,7 +13,7 @@ export default class NoteModel {
     this.vexflowNotation = `${this.value.toLowerCase()}/${this.octave}`;
   }
 
-  static createFromScientificPitchNotation(scientificPitchNotation: string) {
+  static createFromScientificPitchNotation(scientificPitchNotation: string): NoteModel {
     const noteValueWithoutOctave: string = scientificPitchNotation.slice(0, -1);
     const noteOctave: number = parseInt(scientificPitchNotation.slice(-1));
 
@@ -22,7 +22,7 @@ export default class NoteModel {
     return new NoteModel(noteValueWithoutOctave, noteOctave);
   }
 
-  static createFromVexflowNotation(vexflowNotation: string) {
+  static createFromVexflowNotation(vexflowNotation: string): NoteModel {
     const noteValueWithoutOctave: string = vexflowNotation.slice(0, 1).toUpperCase();
     const noteOctave: number = parseInt(vexflowNotation.slice(-1));
 
