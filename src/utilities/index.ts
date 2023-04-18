@@ -1,4 +1,4 @@
-const shuffleArray = function(array) {
+const shuffleArray = function<T>(array: T[]): T[] {
   const newArray = array.slice();
   
   for (let i = newArray.length - 1; i > 0; i--) {
@@ -8,11 +8,11 @@ const shuffleArray = function(array) {
   return newArray;
 };
 
-export const randomElement = function(array) {
+export const randomElement = function<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)];
 };
 
-export const randomElements = function(array, count) {
+export const randomElements = function<T>(array: T[], count: number): T[] {
   if(count === 0) return [];
 
   if(!array || array.length === 0) return [];
