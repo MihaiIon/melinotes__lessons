@@ -44,7 +44,7 @@ export default class QuizzQuestionModel<T> {
   }
 
   private validateChoices() {
-    if(this.choices.length === 0) {
+    if(this.choicesCount === 0) {
       throw new Error("A quizz question must contain choices");
     }
   }
