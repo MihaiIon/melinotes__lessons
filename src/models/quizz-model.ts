@@ -1,51 +1,27 @@
-import { QuizzGeneratorModel } from "./quizz-generators";
-import { randomElement } from "@/utilities";
+import { QuizzQuestionModel, NoteModel } from "@/models";
 
-type Generator<T extends QuizzGeneratorModel> = T
+type ValidQuizzQuestionType = NoteModel
 
-interface QuizzModelParams<T> {
-  choices: T[];
-  allChoices?: T[];
-  generator?: Generator<QuizzGeneratorModel>;
+interface QuizzModelParams<ValidQuizzQuestionType> {
+  questions: QuizzQuestionModel<ValidQuizzQuestionType>[];
 };
 
-interface QuizzModelConfig<T> {
-  allChoices: T[];
-  allChoicesCount: number;
-  generator: Generator<QuizzGeneratorModel> | null;
-}
+export default class QuizzModel<ValidQuizzQuestionType> {
+  score: number;
+  questions: QuizzQuestionModel<ValidQuizzQuestionType>[];
+  questionsCount: number;
 
-export default class QuizzModel<T> {
-  answer: T;
-  choices: T[];
-  choicesCount: number;
-  config: QuizzModelConfig<T>;
+  constructor(params: QuizzModelParams<ValidQuizzQuestionType>) {
+    this.score = 0;
 
-  constructor(params: QuizzModelParams<T>) {
-    this.config = {} as QuizzModelConfig<T>;
-    this.initializeConfigFromParams(params);
-
-    this.choices = params.choices;
-    this.choicesCount = this.choices.length;
-    this.validateChoices();
-
-    this.answer = randomElement(this.choices);
+    this.questions = params.questions;
+    this.questionsCount = params.questions.length;
+    this.validateQuestions();
   }
 
-  private initializeConfigFromParams(params: QuizzModelParams<T>) {
-    let allChoices = params.allChoices || [];
-    allChoices = allChoices.length > 0 ? allChoices : params.choices;
-
-    this.config = {
-      allChoices,
-      allChoicesCount: allChoices.length,
-      generator: params.generator || null,
-    };
-  }
-
-  private validateChoices() {
-    if(this.choices.length === 0) {
-      throw new Error("The `choices` configuration cannot be empty");
+  private validateQuestions() {
+    if(this.questionsCount === 0) {
+      throw new Error("A quizz must contain questions");
     }
   }
 }

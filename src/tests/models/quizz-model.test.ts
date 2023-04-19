@@ -1,34 +1,33 @@
-import Model from "@/models/quizz-model";
+import { QuizzModel as Model, QuizzQuestionModel, NoteModel } from "@/models";
+import { TrebleClefNaturalNoteQuizzQuestionGeneratorModel } from "@/models/quizz-question-generators";
 
 describe("QuizzModel", () => {
   describe("#new", () => {
-    describe("when creating a quizz with an empty `choices` configuration", () => {
-      it("should throw an error describing that the `choices` configuration is required", () => {
-        expect(() => new Model({ choices: [] })).toThrowError("The `choices` configuration cannot be empty");
+    describe("when creating a quizz without questions", () => {
+      it("should throw an error describing that the questions are required", () => {
+        expect(() => new Model({ questions: [] })).toThrowError("A quizz must contain questions");
       });
     });
 
-    describe("when creating a quizz with a valid `choices` configuration", () => {
-      it("should create a quizz with the given choices", () => {
-        const choices = ["A", "B", "C", "D"];
-        const quizz = new Model({ choices });
+    describe("when creating a quizz with 4 questions", () => {
+      let questions: QuizzQuestionModel<NoteModel>[];
 
-        expect(quizz.choices).toBe(choices);
-        expect(quizz.choicesCount).toBe(4);
-
-        expect(quizz.config.allChoices).toBe(choices);
-        expect(quizz.config.allChoicesCount).toBe(4);
+      beforeEach(() => {
+        const generator = new TrebleClefNaturalNoteQuizzQuestionGeneratorModel();
+        questions = [generator.generate(), generator.generate(), generator.generate(), generator.generate()];
       });
 
-      it('should select an answer from the quizz choices (100 tries)', () => {
-        let quizz;
-        const choices = ["A", "B", "C", "D", "E", "F", "G"];
-        
-        for (let i = 0; i < 100; i++) {
-          quizz = new Model({ choices });
-          
-          expect(quizz.choices).toContain(quizz.answer);
-        }
+      it("should create a quizz with the given questions", () => {
+        const quizz = new Model({ questions });
+
+        expect(quizz.questions).toBe(questions);
+        expect(quizz.questionsCount).toBe(4);
+      });
+
+      it("should create a quizz with a score of 0", () => {
+        const quizz = new Model({ questions });
+
+        expect(quizz.score).toBe(0);
       });
     });
   });

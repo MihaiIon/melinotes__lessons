@@ -1,9 +1,13 @@
-import QuizzModel from "@/models/quizz-model";
+import { QuizzModel, NoteModel } from "@/models";
 
-import TrebleClefNaturalNoteQuizzGeneratorModel from "@/models/quizz-generators/treble-clef-natural-note-quizz-generator-model";
+import { TrebleClefNaturalNoteQuizzQuestionGeneratorModel } from "@/models/quizz-question-generators";
 
-export const createTrebleClefNaturalNoteQuizz = () => {
-  const generator = new TrebleClefNaturalNoteQuizzGeneratorModel();
+export const createTrebleClefNaturalNoteQuizz = (questionsCount: number = 12): QuizzModel<NoteModel> => {
+  const generator = new TrebleClefNaturalNoteQuizzQuestionGeneratorModel();
 
-  return generator.generate();
+  const questions = [];
+  for(let i = 0; i < questionsCount; i++) {
+    questions.push(generator.generate());
+  }
+  return new QuizzModel<NoteModel>({ questions });
 };
