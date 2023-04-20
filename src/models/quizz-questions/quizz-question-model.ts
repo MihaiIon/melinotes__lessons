@@ -1,28 +1,33 @@
-import { QuizzQuestionGeneratorModel } from "./quizz-question-generators";
+import { QuizzQuestionGeneratorModel } from "../quizz-question-generators";
 import { randomElement } from "@/utilities";
 
 type Generator<T extends QuizzQuestionGeneratorModel> = T
 
-interface QuizzQuestionModelParams<T> {
-  choices: T[];
-  allChoices?: T[];
-  generator?: Generator<QuizzQuestionGeneratorModel>;
-};
-
-interface QuizzQuestionModelConfig<T> {
+interface IQuizzQuestionModelConfig<T> {
   allChoices: T[];
   allChoicesCount: number;
   generator: Generator<QuizzQuestionGeneratorModel> | null;
 }
 
+export interface IQuizzQuestionModelParams<T> {
+  choices: T[];
+  allChoices?: T[];
+  generator?: Generator<QuizzQuestionGeneratorModel>;
+};
+
 export default class QuizzQuestionModel<T> {
   answer: T;
+  answered: boolean = false;
+  isCorrectlyAnswered: boolean | null = null;
+
   choices: T[];
   choicesCount: number;
-  config: QuizzQuestionModelConfig<T>;
+  selectedChoice: T | null = null;
+  
+  config: IQuizzQuestionModelConfig<T>;
 
-  constructor(params: QuizzQuestionModelParams<T>) {
-    this.config = {} as QuizzQuestionModelConfig<T>;
+  constructor(params: IQuizzQuestionModelParams<T>) {
+    this.config = {} as IQuizzQuestionModelConfig<T>;
     this.initializeConfigFromParams(params);
 
     this.choices = params.choices;
@@ -32,7 +37,18 @@ export default class QuizzQuestionModel<T> {
     this.answer = randomElement(this.choices);
   }
 
-  private initializeConfigFromParams(params: QuizzQuestionModelParams<T>) {
+  selectChoice(choice: T): T {
+    if(this.answered) return choice;
+
+    this.selectedChoice = choice;
+    this.answered = true;
+
+    this.isCorrectlyAnswered = this.selectedChoice === this.answer;
+
+    return choice;
+  }
+
+  private initializeConfigFromParams(params: IQuizzQuestionModelParams<T>): void {
     let allChoices = params.allChoices || [];
     allChoices = allChoices.length > 0 ? allChoices : params.choices;
 
@@ -43,7 +59,7 @@ export default class QuizzQuestionModel<T> {
     };
   }
 
-  private validateChoices() {
+  private validateChoices(): void {
     if(this.choicesCount === 0) {
       throw new Error("A quizz question must contain choices");
     }

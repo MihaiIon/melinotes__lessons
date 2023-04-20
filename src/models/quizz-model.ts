@@ -1,4 +1,5 @@
-import { QuizzQuestionModel, NoteModel } from "@/models";
+import { QuizzQuestionModel } from "@/models/quizz-questions";
+import { NoteModel } from "@/models";
 
 type ValidQuizzQuestionType = NoteModel
 
