@@ -1,15 +1,9 @@
-import { QuizzQuestionGeneratorModel } from "../quizz-question-generators";
-
-type Generator<T extends QuizzQuestionGeneratorModel> = T
-
 export interface IQuizzQuestionModelConfig<T> {
   answer: T | null;
-  generator: Generator<QuizzQuestionGeneratorModel> | null;
 }
 
 export interface IQuizzQuestionModelParams<T> {
   answer?: T;
-  generator?: Generator<QuizzQuestionGeneratorModel>;
 };
 
 export default abstract class QuizzQuestionModel<T> {
@@ -28,7 +22,6 @@ export default abstract class QuizzQuestionModel<T> {
 
   protected initializeConfigFromParams(params: IQuizzQuestionModelParams<T>): void {
     this.config.answer = params.answer || null;
-    this.config.generator = params.generator || null;
   }
 
   setUserAnswer(userAnswer: T): void {

@@ -1,8 +1,6 @@
 import { QuizzQuestionModel as Model } from "@/models/quizz-questions";
 import { IQuizzQuestionModelParams } from "@/models/quizz-questions/quizz-question-model";
 
-import { QuizzQuestionGeneratorModel } from "@/models/quizz-question-generators";
-
 interface IExampleQuizzQuestionModelParams extends IQuizzQuestionModelParams<string> {}
 
 class ExampleQuizzQuestionModel extends Model<string> {
@@ -35,19 +33,6 @@ describe("QuizzQuestionModel (extended by ExampleQuizzQuestionModel)", () => {
       expect(question.userAnswer).toBeNull();
       expect(question.answered).toBe(false);
       expect(question.isCorrectlyAnswered).toBeNull();
-    });
-
-    it('should not have a question generator object in the question configuration', () => {
-      expect(question.config.generator).toBe(null);
-    });
-
-    describe("when creating a quizz question with a generator", () => {
-      it("should set the generator in the question configuration", () => {
-        const generator = new QuizzQuestionGeneratorModel();
-        question = new ExampleQuizzQuestionModel({ generator });
-
-        expect(question.config.generator).toBe(generator);
-      });
     });
 
     describe("when creating a quizz question with a given answer", () => {
