@@ -1,67 +1,42 @@
 import { QuizzQuestionGeneratorModel } from "../quizz-question-generators";
-import { randomElement } from "@/utilities";
 
 type Generator<T extends QuizzQuestionGeneratorModel> = T
 
-interface IQuizzQuestionModelConfig<T> {
-  allChoices: T[];
-  allChoicesCount: number;
+export interface IQuizzQuestionModelConfig<T> {
+  answer: T | null;
   generator: Generator<QuizzQuestionGeneratorModel> | null;
 }
 
 export interface IQuizzQuestionModelParams<T> {
-  choices: T[];
-  allChoices?: T[];
+  answer?: T;
   generator?: Generator<QuizzQuestionGeneratorModel>;
 };
 
-export default class QuizzQuestionModel<T> {
-  answer: T;
+export default abstract class QuizzQuestionModel<T> {
+  text: string = "Question";
+  category: string = "Generic";
+  
+  userAnswer: T | null = null;
   answered: boolean = false;
   isCorrectlyAnswered: boolean | null = null;
 
-  choices: T[];
-  choicesCount: number;
-  selectedChoice: T | null = null;
-  
-  config: IQuizzQuestionModelConfig<T>;
+  config: IQuizzQuestionModelConfig<T> = {} as IQuizzQuestionModelConfig<T>;
 
-  constructor(params: IQuizzQuestionModelParams<T>) {
-    this.config = {} as IQuizzQuestionModelConfig<T>;
+  constructor(params: IQuizzQuestionModelParams<T> = {}) {
     this.initializeConfigFromParams(params);
-
-    this.choices = params.choices;
-    this.choicesCount = this.choices.length;
-    this.validateChoices();
-
-    this.answer = randomElement(this.choices);
   }
 
-  selectChoice(choice: T): T {
-    if(this.answered) return choice;
+  protected initializeConfigFromParams(params: IQuizzQuestionModelParams<T>): void {
+    this.config.answer = params.answer || null;
+    this.config.generator = params.generator || null;
+  }
 
-    this.selectedChoice = choice;
+  setUserAnswer(userAnswer: T): void {
+    if(this.answered) return;
+
+    this.userAnswer = userAnswer;
     this.answered = true;
 
-    this.isCorrectlyAnswered = this.selectedChoice === this.answer;
-
-    return choice;
-  }
-
-  private initializeConfigFromParams(params: IQuizzQuestionModelParams<T>): void {
-    let allChoices = params.allChoices || [];
-    allChoices = allChoices.length > 0 ? allChoices : params.choices;
-
-    this.config = {
-      allChoices,
-      allChoicesCount: allChoices.length,
-      generator: params.generator || null,
-    };
-  }
-
-  private validateChoices(): void {
-    if(this.choicesCount === 0) {
-      throw new Error("A quizz question must contain choices");
-    }
+    this.isCorrectlyAnswered = this.userAnswer === this.config.answer;
   }
 }

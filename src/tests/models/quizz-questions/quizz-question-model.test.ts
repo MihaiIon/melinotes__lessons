@@ -1,82 +1,112 @@
 import { QuizzQuestionModel as Model } from "@/models/quizz-questions";
+import { IQuizzQuestionModelParams } from "@/models/quizz-questions/quizz-question-model";
 
-describe("QuizzQuestionModel", () => {
+import { QuizzQuestionGeneratorModel } from "@/models/quizz-question-generators";
+
+interface IExampleQuizzQuestionModelParams extends IQuizzQuestionModelParams<string> {}
+
+class ExampleQuizzQuestionModel extends Model<string> {
+  constructor(params: IExampleQuizzQuestionModelParams = {}) {
+    super(params);
+  }
+}
+
+describe("QuizzQuestionModel (extended by ExampleQuizzQuestionModel)", () => {
   describe("#new", () => {
-    describe("when creating a quizz question without choices", () => {
-      it("should throw an error describing that the choices are required", () => {
-        expect(() => new Model({ choices: [] })).toThrowError("A quizz question must contain choices");
+    let question: ExampleQuizzQuestionModel;
+
+    beforeEach(() => {
+      question = new ExampleQuizzQuestionModel();
+    });
+
+    it("should create a new instance of QuizzQuestionModel", () => {
+      expect(question).toBeInstanceOf(Model);
+    });
+
+    it("should set a generic text asking the user to answer the question", () => {
+      expect(question.text).toBe("Question");
+    });
+
+    it("should set a generic category", () => {
+      expect(question.category).toBe("Generic");
+    });
+
+    it('should not be answered', () => {
+      expect(question.userAnswer).toBeNull();
+      expect(question.answered).toBe(false);
+      expect(question.isCorrectlyAnswered).toBeNull();
+    });
+
+    it('should not have a question generator object in the question configuration', () => {
+      expect(question.config.generator).toBe(null);
+    });
+
+    describe("when creating a quizz question with a generator", () => {
+      it("should set the generator in the question configuration", () => {
+        const generator = new QuizzQuestionGeneratorModel();
+        question = new ExampleQuizzQuestionModel({ generator });
+
+        expect(question.config.generator).toBe(generator);
       });
     });
 
-    describe("when creating a quizz question with valid choices", () => {
-      it("should create a quizz with the given choices", () => {
-        const choices = ["A", "B", "C", "D"];
-        const question = new Model({ choices });
+    describe("when creating a quizz question with a given answer", () => {
+      it("should set the answer in the question configuration", () => {
+        const answer = "this_is_the_correct_answer";
+        question = new ExampleQuizzQuestionModel({ answer });
 
-        expect(question.choices).toBe(choices);
-        expect(question.choicesCount).toBe(4);
-
-        expect(question.config.allChoices).toBe(choices);
-        expect(question.config.allChoicesCount).toBe(4);
-      });
-
-      it('should select an answer from the quizz choices (100 tries)', () => {
-        let question;
-        const choices = ["A", "B", "C", "D", "E", "F", "G"];
-        
-        for (let i = 0; i < 100; i++) {
-          question = new Model({ choices });
-          
-          expect(question.choices).toContain(question.answer);
-        }
+        expect(question.config.answer).toBe(answer);
       });
     });
   });
 
-  describe("#selectChoice", () => {
-    describe("when selecting a choice", () => {
-      let question: Model<string>;
+  describe("#setUserAnswer", () => {
+    let question: ExampleQuizzQuestionModel;
+    const answer = "this_is_the_correct_answer";
 
-      beforeEach(() => {
-        question = new Model({ choices: ['C', 'D'] });
+    beforeEach(() => {
+      question = new ExampleQuizzQuestionModel({ answer });
+    });
+
+    it("should set the answer of the question", () => {
+      const userAnswer = "user_answer";
+
+      question.setUserAnswer(userAnswer);
+      expect(question.userAnswer).toBe(userAnswer);
+    });
+
+    it('should mark the question as answered', () => {
+      expect(question.answered).toBe(false);
+      
+      question.setUserAnswer(answer);
+      expect(question.answered).toBe(true);
+    });
+
+    describe("when the user's answer is already set", () => {
+      it("should not change the user's answer", () => {
+        const userAnswer = "user_answer";
+
+        question.setUserAnswer(userAnswer);
+        question.setUserAnswer("some_other_answer");
+
+        expect(question.userAnswer).toBe(userAnswer);
       });
+    });
 
-      it('should mark the question as answered', () => {
-        expect(question.answered).toBe(false);
-        
-        question.selectChoice('C');
-        expect(question.answered).toBe(true);
-      });
-
-      it('should save the selected choice', () => {
-        expect(question.selectedChoice).toBe(null);
-
-        question.selectChoice('C');
-        expect(question.selectedChoice).toBe('C');
-      });
-
-      it('should not allow to select another choice', () => {
-        question.selectChoice('C');
-        question.selectChoice('D');
-
-        expect(question.selectedChoice).toBe('C');
-      });
-    });  
-
-    describe("when selecting an incorrect choice", () => {
+    describe("when the user's answer is wrong", () => {
       it('should mark the question as incorrectly answered', () => {
-        const question = new Model({ choices: ['C', 'D'] });
-        question.selectChoice('E');
+        expect(question.isCorrectlyAnswered).toBe(null);
 
+        question.setUserAnswer('wrong_answer');
         expect(question.isCorrectlyAnswered).toBe(false);
       });
     });
 
     describe("when selecting the correct choice", () => {
       it('should mark the question as correctly answered', () => {
-        const question = new Model({ choices: ['C', 'D'] });
-        question.selectChoice(question.answer);
+        expect(question.isCorrectlyAnswered).toBe(null);
 
+        question.setUserAnswer(answer);
         expect(question.isCorrectlyAnswered).toBe(true);
       });
     });
