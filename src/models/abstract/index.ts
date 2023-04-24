@@ -1,2 +1,2 @@
-export { default as QuizzQuestionModel } from './quizz-question-model';
-export { default as QuizzQuestionWithChoicesModel } from './quizz-question-with-choices-model';
+export { default as QuizQuestionModel } from './quiz-question-model';
+export { default as QuizQuestionSingleChoiceModel } from './quiz-question-slingle-choice-model';

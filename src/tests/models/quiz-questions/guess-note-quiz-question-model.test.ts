@@ -1,8 +1,8 @@
-import { GuessNoteQuizzQuestionModel as Model } from '@/models/quizz-questions';
-import { QuizzQuestionWithChoicesModel } from '@/models/abstract';
+import { GuessNoteQuizQuestionModel as Model } from '@/models/quiz-questions';
+import { QuizQuestionSingleChoiceModel } from '@/models/abstract';
 import { NoteModel } from '@/models';
 
-describe('GuessNoteQuizzQuestionModel', () => {
+describe('GuessNoteQuizQuestionModel', () => {
   describe('#new', () => {
     let question: Model;
 
@@ -10,8 +10,8 @@ describe('GuessNoteQuizzQuestionModel', () => {
       question = new Model({ choices: [NoteModel.createFromScientificPitchNotation('C4')] });
     });
 
-    it("should extend QuizzQuestionModel", () => {
-      expect(question).toBeInstanceOf(QuizzQuestionWithChoicesModel);
+    it("should extend QuizQuestionModel", () => {
+      expect(question).toBeInstanceOf(QuizQuestionSingleChoiceModel);
     });
 
     it('should have the expected question text', () => {
@@ -22,7 +22,7 @@ describe('GuessNoteQuizzQuestionModel', () => {
       expect(question.config.clef).toBe('treble');
     });
 
-    describe('when creating a quizz question with a given clef', () => {
+    describe('when creating a Quiz question with a given clef', () => {
       it('should set the clef configuration to the given clef', () => {
         const clef = 'bass';
         question = new Model({ choices: [NoteModel.createFromScientificPitchNotation('C4')], clef });

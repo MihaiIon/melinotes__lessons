@@ -1,12 +1,12 @@
-export interface IQuizzQuestionModelConfig<T> {
+export interface IQuizQuestionModelConfig<T> {
   answer: T | null;
 }
 
-export interface IQuizzQuestionModelParams<T> {
+export interface IQuizQuestionModelParams<T> {
   answer?: T;
 };
 
-export default abstract class QuizzQuestionModel<T> {
+export default abstract class QuizQuestionModel<T> {
   text: string = "Question";
   category: string = "Generic";
   
@@ -14,13 +14,13 @@ export default abstract class QuizzQuestionModel<T> {
   answered: boolean = false;
   isCorrectlyAnswered: boolean | null = null;
 
-  config: IQuizzQuestionModelConfig<T> = {} as IQuizzQuestionModelConfig<T>;
+  config: IQuizQuestionModelConfig<T> = {} as IQuizQuestionModelConfig<T>;
 
-  constructor(params: IQuizzQuestionModelParams<T> = {}) {
+  constructor(params: IQuizQuestionModelParams<T> = {}) {
     this.initializeConfigFromParams(params);
   }
 
-  protected initializeConfigFromParams(params: IQuizzQuestionModelParams<T>): void {
+  protected initializeConfigFromParams(params: IQuizQuestionModelParams<T>): void {
     this.config.answer = params.answer || null;
   }
 

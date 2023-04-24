@@ -1,21 +1,21 @@
-import { QuizzQuestionWithChoicesModel as Model } from '@/models/abstract';
-import { IQuizzQuestionWithChoicesModelParams } from "@/models/abstract/quizz-question-with-choices-model";
+import { QuizQuestionSingleChoiceModel as Model } from '@/models/abstract';
+import { IQuizQuestionSingleChoiceModelParams } from "@/models/abstract/quiz-question-slingle-choice-model";
 
-class ExampleQuizzQuestionWithChoicesModel extends Model<string> {
-  constructor(params: IQuizzQuestionWithChoicesModelParams<string>) {
+class ExampleQuizQuestionSingleChoiceModel extends Model<string> {
+  constructor(params: IQuizQuestionSingleChoiceModelParams<string>) {
     super(params);
   }
 }
 
-describe('QuizzQuestionWithChoicesModel (extended by ExampleQuizzQuestionWithChoicesModel)', () => {
+describe('QuizQuestionSingleChoiceModel (extended by ExampleQuizQuestionSingleChoiceModel)', () => {
   describe('#new', () => {
-    let question: ExampleQuizzQuestionWithChoicesModel;
+    let question: ExampleQuizQuestionSingleChoiceModel;
 
     beforeEach(() => {
-      question = new ExampleQuizzQuestionWithChoicesModel({ choices: ['A', 'B', 'C', 'D'] });
+      question = new ExampleQuizQuestionSingleChoiceModel({ choices: ['A', 'B', 'C', 'D'] });
     });
 
-    it("should extend QuizzQuestionModel", () => {
+    it("should extend QuizQuestionModel", () => {
       expect(question).toBeInstanceOf(Model);
     });
 
@@ -27,16 +27,16 @@ describe('QuizzQuestionWithChoicesModel (extended by ExampleQuizzQuestionWithCho
       expect(question.category).toBe('make a choice');
     });
 
-    describe("when creating a quizz question without choices", () => {
+    describe("when creating a Quiz question without choices", () => {
       it("should throw an error describing that the choices are required", () => {
-        expect(() => new ExampleQuizzQuestionWithChoicesModel({ choices: [] })).toThrowError("A quizz question with choices must contain choices");
+        expect(() => new ExampleQuizQuestionSingleChoiceModel({ choices: [] })).toThrowError("A Quiz question with choices must contain choices");
       });
     });
 
-    describe("when creating a quizz question with valid choices", () => {
-      it("should create a quizz with the given choices", () => {
+    describe("when creating a Quiz question with valid choices", () => {
+      it("should create a Quiz with the given choices", () => {
         const choices = ["A", "B", "C", "D"];
-        const question = new ExampleQuizzQuestionWithChoicesModel({ choices });
+        const question = new ExampleQuizQuestionSingleChoiceModel({ choices });
 
         expect(question.choices).toBe(choices);
         expect(question.choicesCount).toBe(4);
@@ -45,12 +45,12 @@ describe('QuizzQuestionWithChoicesModel (extended by ExampleQuizzQuestionWithCho
         expect(question.config.allChoicesCount).toBe(4);
       });
 
-      it('should select an answer from the quizz choices (100 tries)', () => {
+      it('should select an answer from the Quiz choices (100 tries)', () => {
         let question;
         const choices = ["A", "B", "C", "D", "E", "F", "G"];
         
         for (let i = 0; i < 100; i++) {
-          question = new ExampleQuizzQuestionWithChoicesModel({ choices });
+          question = new ExampleQuizQuestionSingleChoiceModel({ choices });
           
           expect(question.choices).toContain(question.config.answer);
         }
@@ -59,10 +59,10 @@ describe('QuizzQuestionWithChoicesModel (extended by ExampleQuizzQuestionWithCho
   });
 
   describe("#setUserAnswer", () => {
-    let question: ExampleQuizzQuestionWithChoicesModel;
+    let question: ExampleQuizQuestionSingleChoiceModel;
 
     beforeEach(() => {
-      question = new ExampleQuizzQuestionWithChoicesModel({ choices: ['A', 'B', 'C', 'D'] });
+      question = new ExampleQuizQuestionSingleChoiceModel({ choices: ['A', 'B', 'C', 'D'] });
     });
 
     describe("when selecting an incorrect choice", () => {

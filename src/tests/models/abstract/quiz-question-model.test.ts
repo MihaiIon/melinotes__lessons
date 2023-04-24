@@ -1,21 +1,21 @@
-import { QuizzQuestionModel as Model } from "@/models/abstract";
-import { IQuizzQuestionModelParams } from "@/models/abstract/quizz-question-model";
+import { QuizQuestionModel as Model } from "@/models/abstract";
+import { IQuizQuestionModelParams } from "@/models/abstract/quiz-question-model";
 
-class ExampleQuizzQuestionModel extends Model<string> {
-  constructor(params: IQuizzQuestionModelParams<string> = {}) {
+class ExampleQuizQuestionModel extends Model<string> {
+  constructor(params: IQuizQuestionModelParams<string> = {}) {
     super(params);
   }
 }
 
-describe("QuizzQuestionModel (extended by ExampleQuizzQuestionModel)", () => {
+describe("QuizQuestionModel (extended by ExampleQuizQuestionModel)", () => {
   describe("#new", () => {
-    let question: ExampleQuizzQuestionModel;
+    let question: ExampleQuizQuestionModel;
 
     beforeEach(() => {
-      question = new ExampleQuizzQuestionModel();
+      question = new ExampleQuizQuestionModel();
     });
 
-    it("should create a new instance of QuizzQuestionModel", () => {
+    it("should create a new instance of QuizQuestionModel", () => {
       expect(question).toBeInstanceOf(Model);
     });
 
@@ -33,10 +33,10 @@ describe("QuizzQuestionModel (extended by ExampleQuizzQuestionModel)", () => {
       expect(question.isCorrectlyAnswered).toBeNull();
     });
 
-    describe("when creating a quizz question with a given answer", () => {
+    describe("when creating a Quiz question with a given answer", () => {
       it("should set the answer in the question configuration", () => {
         const answer = "this_is_the_correct_answer";
-        question = new ExampleQuizzQuestionModel({ answer });
+        question = new ExampleQuizQuestionModel({ answer });
 
         expect(question.config.answer).toBe(answer);
       });
@@ -44,11 +44,11 @@ describe("QuizzQuestionModel (extended by ExampleQuizzQuestionModel)", () => {
   });
 
   describe("#setUserAnswer", () => {
-    let question: ExampleQuizzQuestionModel;
+    let question: ExampleQuizQuestionModel;
     const answer = "this_is_the_correct_answer";
 
     beforeEach(() => {
-      question = new ExampleQuizzQuestionModel({ answer });
+      question = new ExampleQuizQuestionModel({ answer });
     });
 
     it("should set the answer of the question", () => {

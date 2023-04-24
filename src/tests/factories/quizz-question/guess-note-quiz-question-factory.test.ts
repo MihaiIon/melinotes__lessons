@@ -1,26 +1,26 @@
-import { GuessNoteQuizzQuestionFactory } from '@/factories/quizz-question';
-import { GuessNoteQuizzQuestionModel } from "@/models/quizz-questions";
+import { GuessNoteQuizQuestionFactory } from '@/factories/Quiz-question';
+import { GuessNoteQuizQuestionModel } from "@/models/quiz-questions";
 import { NoteModel } from '@/models';
 
-describe('GuessNoteQuizzQuestionFactory', () => {
+describe('GuessNoteQuizQuestionFactory', () => {
   describe(".createForTrebleClef", () => {
-    let question: GuessNoteQuizzQuestionModel;
+    let question: GuessNoteQuizQuestionModel;
 
     beforeEach(() => {
-      question = GuessNoteQuizzQuestionFactory.createForTrebleClef();
+      question = GuessNoteQuizQuestionFactory.createForTrebleClef();
     });
 
-    it('should return an instance of the GuessNoteQuizzQuestionModel class', () => {
-      expect(question).toBeInstanceOf(GuessNoteQuizzQuestionModel);
+    it('should return an instance of the GuessNoteQuizQuestionModel class', () => {
+      expect(question).toBeInstanceOf(GuessNoteQuizQuestionModel);
     });
 
-    it("should return a quizz question configured for the treble clef", () => {
+    it("should return a Quiz question configured for the treble clef", () => {
       expect(question.config.clef).toBe('treble');
     });
 
-    it("should return a quizz question with a question text", () => {});
+    it("should return a Quiz question with a question text", () => {});
 
-    it('should return a quizz question containing only natural notes', () => {
+    it('should return a Quiz question containing only natural notes', () => {
       const allChoicesValue = question.config.allChoices.map(choice => choice.value);
       const allChoicesValueSet = new Set(allChoicesValue);
 

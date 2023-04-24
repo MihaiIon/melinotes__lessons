@@ -1,29 +1,29 @@
-import { QuizzQuestionModel } from '.';
-import { IQuizzQuestionModelParams, IQuizzQuestionModelConfig } from './quizz-question-model';
+import { QuizQuestionModel } from '.';
+import { IQuizQuestionModelParams, IQuizQuestionModelConfig } from './quiz-question-model';
 
 import { randomElement } from "@/utilities";
 
-export interface IQuizzQuestionWithChoicesModelParams<T> extends IQuizzQuestionModelParams<T> {
+export interface IQuizQuestionSingleChoiceModelParams<T> extends IQuizQuestionModelParams<T> {
   choices: T[];
   allChoices?: T[];
 };
 
-export interface IQuizzQuestionWithChoicesModelConfig<T> extends IQuizzQuestionModelConfig<T> {
+export interface IQuizQuestionSingleChoiceModelConfig<T> extends IQuizQuestionModelConfig<T> {
   answer: T;
   allChoices: T[];
   allChoicesCount: number;
 }
 
-export default abstract class QuizzQuestionWithChoicesModel<T> extends QuizzQuestionModel<T> {
+export default abstract class QuizQuestionSingleChoiceModel<T> extends QuizQuestionModel<T> {
   text: string = "What is the correct answer?";
   category: string = "make a choice";
 
   choices: T[] = [];
   choicesCount: number = 0;
 
-  config: IQuizzQuestionWithChoicesModelConfig<T> = {} as IQuizzQuestionWithChoicesModelConfig<T>;
+  config: IQuizQuestionSingleChoiceModelConfig<T> = {} as IQuizQuestionSingleChoiceModelConfig<T>;
 
-  constructor(params: IQuizzQuestionWithChoicesModelParams<T>) {
+  constructor(params: IQuizQuestionSingleChoiceModelParams<T>) {
     super(params);
 
     this.initializeConfigFromParams(params);
@@ -32,7 +32,7 @@ export default abstract class QuizzQuestionWithChoicesModel<T> extends QuizzQues
     this.setAnswer();
   }
 
-  protected initializeConfigFromParams(params: IQuizzQuestionWithChoicesModelParams<T>): void {
+  protected initializeConfigFromParams(params: IQuizQuestionSingleChoiceModelParams<T>): void {
     let allChoices = params.allChoices || [];
     allChoices = allChoices.length > 0 ? allChoices : params.choices;
 
@@ -55,7 +55,7 @@ export default abstract class QuizzQuestionWithChoicesModel<T> extends QuizzQues
 
   private validateChoices(): void {
     if(this.choicesCount === 0) {
-      throw new Error("A quizz question with choices must contain choices");
+      throw new Error("A Quiz question with choices must contain choices");
     }
   }
 }
