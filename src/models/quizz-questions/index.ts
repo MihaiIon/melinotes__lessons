@@ -1,1 +1,1 @@
-export { default as NoteQuizzQuestionModel } from './note-quizz-question-model';
+export { default as GuessNoteQuizzQuestionModel } from './guess-note-quizz-question-model';
