@@ -1,10 +1,8 @@
-import { QuizzQuestionModel as Model } from "@/models/quizz-questions";
-import { IQuizzQuestionModelParams } from "@/models/quizz-questions/quizz-question-model";
-
-interface IExampleQuizzQuestionModelParams extends IQuizzQuestionModelParams<string> {}
+import { QuizzQuestionModel as Model } from "@/models/abstract";
+import { IQuizzQuestionModelParams } from "@/models/abstract/quizz-question-model";
 
 class ExampleQuizzQuestionModel extends Model<string> {
-  constructor(params: IExampleQuizzQuestionModelParams = {}) {
+  constructor(params: IQuizzQuestionModelParams<string> = {}) {
     super(params);
   }
 }

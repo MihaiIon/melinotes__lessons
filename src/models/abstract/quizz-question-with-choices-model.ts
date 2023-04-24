@@ -3,18 +3,18 @@ import { IQuizzQuestionModelParams, IQuizzQuestionModelConfig } from './quizz-qu
 
 import { randomElement } from "@/utilities";
 
-interface IQuizzQuestionWithChoicesModelParams<T> extends IQuizzQuestionModelParams<T> {
+export interface IQuizzQuestionWithChoicesModelParams<T> extends IQuizzQuestionModelParams<T> {
   choices: T[];
   allChoices?: T[];
 };
 
-interface IQuizzQuestionWithChoicesModelConfig<T> extends IQuizzQuestionModelConfig<T> {
+export interface IQuizzQuestionWithChoicesModelConfig<T> extends IQuizzQuestionModelConfig<T> {
   answer: T;
   allChoices?: T[];
   allChoicesCount: number;
 }
 
-export default class QuizzQuestionWithChoicesModel<T> extends QuizzQuestionModel<T> {
+export default abstract class QuizzQuestionWithChoicesModel<T> extends QuizzQuestionModel<T> {
   text: string = "What is the correct answer?";
   category: string = "make a choice";
 
