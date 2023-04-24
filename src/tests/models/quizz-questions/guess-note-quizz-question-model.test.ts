@@ -4,7 +4,7 @@ import { NoteModel } from '@/models';
 
 describe('GuessNoteQuizzQuestionModel', () => {
   describe('#new', () => {
-    let question: Model<NoteModel>;
+    let question: Model;
 
     beforeEach(() => {
       question = new Model({ choices: [NoteModel.createFromScientificPitchNotation('C4')] });

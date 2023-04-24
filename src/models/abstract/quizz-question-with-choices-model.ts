@@ -10,7 +10,7 @@ export interface IQuizzQuestionWithChoicesModelParams<T> extends IQuizzQuestionM
 
 export interface IQuizzQuestionWithChoicesModelConfig<T> extends IQuizzQuestionModelConfig<T> {
   answer: T;
-  allChoices?: T[];
+  allChoices: T[];
   allChoicesCount: number;
 }
 

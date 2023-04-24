@@ -12,7 +12,7 @@ interface IGuessNoteQuizzQuestionModelConfig<NoteModel> extends IQuizzQuestionWi
   clef: string;
 };
 
-export default class GuessNoteQuizzQuestionModel<NoteModel> extends QuizzQuestionWithChoicesModel<NoteModel> {
+export default class GuessNoteQuizzQuestionModel extends QuizzQuestionWithChoicesModel<NoteModel> {
   text: string = "What is the name of following note?";
 
   config: IGuessNoteQuizzQuestionModelConfig<NoteModel> = {
