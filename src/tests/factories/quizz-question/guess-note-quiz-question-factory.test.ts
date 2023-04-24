@@ -1,6 +1,5 @@
-import { GuessNoteQuizQuestionFactory } from '@/factories/Quiz-question';
+import { GuessNoteQuizQuestionFactory } from '@/factories/quiz-question';
 import { GuessNoteQuizQuestionModel } from "@/models/quiz-questions";
-import { NoteModel } from '@/models';
 
 describe('GuessNoteQuizQuestionFactory', () => {
   describe(".createForTrebleClef", () => {
