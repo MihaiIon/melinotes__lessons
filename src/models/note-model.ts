@@ -1,4 +1,11 @@
 export default class NoteModel {
+  static ALL_NATURAL_NOTES: readonly string[] = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+
+  static SCIENTIFIC_PITCH_NOTATION_REGEX: RegExp = /^[A-G](b|#)?[0-9]$/;
+
+  static SCIENTIFIC_PITCH_NOTATION_ERROR_MESSAGE: string = Object.freeze("Invalid scientific pitch notation");
+  static VEXFLOW_NOTATION_ERROR_MESSAGE: string = Object.freeze("Invalid vexflow notation");
+
   value: string;
   octave: number;
   scientificPitchNotation: string;
@@ -14,20 +21,22 @@ export default class NoteModel {
   }
 
   static createFromScientificPitchNotation(scientificPitchNotation: string): NoteModel {
-    const noteValueWithoutOctave: string = scientificPitchNotation.slice(0, -1);
-    const noteOctave: number = parseInt(scientificPitchNotation.slice(-1));
-
-    if(!noteOctave) throw new Error("Invalid scientific pitch notation");
+    if(!NoteModel.SCIENTIFIC_PITCH_NOTATION_REGEX.test(scientificPitchNotation)) {
+      throw new Error(NoteModel.SCIENTIFIC_PITCH_NOTATION_ERROR_MESSAGE);
+    }
     
-    return new NoteModel(noteValueWithoutOctave, noteOctave);
+    const noteValue: string = scientificPitchNotation.slice(0, -1);
+    const noteOctave: number = parseInt(scientificPitchNotation.slice(-1));
+    
+    return new NoteModel(noteValue, noteOctave);
   }
 
   static createFromVexflowNotation(vexflowNotation: string): NoteModel {
-    const noteValueWithoutOctave: string = vexflowNotation.slice(0, 1).toUpperCase();
+    const noteValue: string = vexflowNotation.slice(0, 1).toUpperCase();
     const noteOctave: number = parseInt(vexflowNotation.slice(-1));
 
-    if(!noteOctave) throw new Error("Invalid vexflow notation");
+    if(!noteOctave) throw new Error(NoteModel.VEXFLOW_NOTATION_ERROR_MESSAGE);
     
-    return new NoteModel(noteValueWithoutOctave, noteOctave);
+    return new NoteModel(noteValue, noteOctave);
   }
 }
